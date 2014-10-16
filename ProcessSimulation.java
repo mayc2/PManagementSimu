@@ -26,10 +26,21 @@ class PreemptivePriority{
 
 }
 
-class Timer{
+class ElapsedTime implements Runnable{
 	int n;
-	public Timer (int n){
-		this.n=n;
+
+	public ElapsedTime(){
+		this.n=0;
+	}
+
+	public void run(){
+		while(true){
+			this.n += 1;
+		}
+	}
+
+	public void time(){
+		System.out.println("Elapsed Time: " + this.n);
 	}
 
 }
@@ -37,11 +48,40 @@ class Timer{
 public class ProcessSimulation implements Runnable{
 
 	public static void main(String[] args) {
-			System.out.println("Test: First Print");
+		ElapsedTime t1 = new ElapsedTime();
+		System.out.println("Test: First Println");
+		Thread th1 = new Thread(t1);
+		th1.start();
+		t1.time();
+		t1.time();
+		t1.time();
+		t1.time();
+		t1.time();
+		int i=0;
+		while(i!=30000000) ++i;
+		System.out.println("past while");
+		t1.time();
+		t1.time();
+		t1.time();
+
+		try{
+		    while ( Thread.activeCount() > 1 )
+		    {
+		      if ( th1.isAlive() )
+		      {
+		        th1.join();     // BLOCKS
+		      }
+		      System.out.println( "t1 thread terminated" );
+		    }
+		}
+		catch ( InterruptedException ex )
+		{
+		}
 	}
 
+
 	public void run(){
-			System.out.println("Test: First Print in run()");		
+		System.out.println("Test: First Print in run()");		
 	}
 
 }
