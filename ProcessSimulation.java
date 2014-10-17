@@ -50,8 +50,8 @@ public class ProcessSimulation implements Runnable{
 	public static void main(String[] args) {
 
 		/*	GLOBAL VARIABLES	*/
-		int n=12;
-		int m=4;
+		int n=12;	//12 by default
+		int m=4;	//4 by default
 
 		/*	HANDLES CLI ARGUMENTS	*/
 		//Usage: java ProcessSimulation.java processes(n) cpu's(m)
@@ -77,6 +77,8 @@ public class ProcessSimulation implements Runnable{
 				return;
 			}
 		}
+
+
 
 		ElapsedTime t1 = new ElapsedTime();
 		System.out.println("Test: First Println");

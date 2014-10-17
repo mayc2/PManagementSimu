@@ -37,8 +37,52 @@ P_cpu=20% cpu bound processes
 	-b=8 such bursts before terminating
 	-between bursts blocked on I/O, 1200-3200ms
 
+/*	   REQUIRED OUTPUT		*/
+	-Process entry (display the process type, process ID, required CPU burst time, and priority, if applicable)
+	-Context switch (display the two before/after process IDs involved); display at the beginning of the context switch)
+	-Process CPU burst completion (display the process ID, its turnaround time, and its total wait time)
+	-Process termination (display the process ID, its turnaround time, and its total wait time)
+	-Aging event (display the process ID and the new priority)
+
+	Turnaround time: min ___ ms; avg ___ ms; max ___ ms
+	Total wait time: min ___ ms; avg ___ ms; max ___ ms
+	Average CPU utilization: ___%
+	Average CPU utilization per process:
+	process ID: ___%
+	process ID: ___%
+	...
+	process ID: ___%
+
+	CPU Utilization = burst time/turnaround time * 100
+
 /************** PSEUDOCODE ***************/
 
-while(queue.size()>0){
+main function:
+	int n for processes
+	int m for cpu's
 
-}
+	read in arguments
+	if arguments for # of processes exists
+		n=args[0]
+	if argument for # of cpu's exists
+		m=args[1]
+
+	call SJF-No Preemption function
+	call SJF-Premption function
+	call RR function
+	call Preemptive-Priority function
+
+
+
+	create a ready queue
+	create processes
+		-80% need to be Interactive Processes
+		-20% CPU-Bound Processes
+	push each process to the ready queue
+
+	while(queue.size>0){
+		increment time
+		while( cpu's available){
+			execute a process
+		}
+	}
