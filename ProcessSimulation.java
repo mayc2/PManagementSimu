@@ -48,6 +48,22 @@ class ElapsedTime implements Runnable{
 public class ProcessSimulation implements Runnable{
 
 	public static void main(String[] args) {
+		//# of processes(default 12)
+		int n=12;
+
+		if(args.length>0){	
+			for (int i=0; i<args.length; ++i){
+				System.out.println(args[i]);
+			}
+			try{
+				n=Integer.parseInt(args[0]);
+			}
+			catch (NumberFormatException e){
+				System.out.println("Invalid Argument: please enter only integers");
+				return;
+			}
+		}
+
 		ElapsedTime t1 = new ElapsedTime();
 		System.out.println("Test: First Println");
 		Thread th1 = new Thread(t1);

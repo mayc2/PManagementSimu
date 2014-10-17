@@ -1,0 +1,25 @@
+//program ends if no processes are in queue
+processes are ready to use a CPU
+actively using a CPU
+blocked on I/O
+
+//# of processes: by default
+int n=12
+
+//# of cpu's: by default
+int m=4
+
+P_int=80% interactive processes
+	-burst times 20-200ms
+	-interactive time 1000-4500ms
+	-returned to ready queue
+
+P_cpu=20% cpu bound processes
+	-burst times 200-3000ms
+	-b=8 such bursts before terminating
+	-between bursts blocked on I/O, 1200-3200ms
+
+//7% chance no processes will be in queue, then exit program
+while(queue.size()>0){
+
+}
