@@ -1,13 +1,31 @@
-//program ends if no processes are in queue
-processes are ready to use a CPU
-actively using a CPU
-blocked on I/O
+processes are:
+	-ready to use a CPU
+	-actively using a CPU
+	-blocked on I/O
+	-NOTE: by chance, no processes will be in queue, then exit program
 
-//# of processes: by default
+/* PARAMETERS */
+
+# of processes: by default
 int n=12
 
-//# of cpu's: by default
+# of cpu's: by default
 int m=4
+
+
+/* ALGORITHMS TO IMPLEMENT */
+
+SJF_No_Preemption
+SJF_Preemptive
+RR
+Preemptive_Priority
+	-priority levels 0-4
+	-same priority handled FCFS
+	-higher priority entering can preempt
+	-every elapsed 1200ms, lower priority processes increase by 1
+
+
+/* TYPES OF PROCESSES TO HANDLE */
 
 P_int=80% interactive processes
 	-burst times 20-200ms
@@ -19,7 +37,8 @@ P_cpu=20% cpu bound processes
 	-b=8 such bursts before terminating
 	-between bursts blocked on I/O, 1200-3200ms
 
-//7% chance no processes will be in queue, then exit program
+/************** PSEUDOCODE ***************/
+
 while(queue.size()>0){
 
 }
