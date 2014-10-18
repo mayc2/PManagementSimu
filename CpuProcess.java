@@ -1,20 +1,13 @@
-import java.util.Random;
-
-public class CpuProcess implements Runnable{
-	public int processID;	//1 through 12 by default
-	public int type;		//interactive or cpu bound
-	public int burstTime;
-	
-
-
-
-	public void run(){
-
+public class CpuProcess extends Process { // 20% are CPU
+	public CpuProcess(int pid, int b) {
+		super(pid);
+		System.out.println("A cpu process has been created!");
+		super.burstTime = super.randInt(200, 3000);
+		numBursts = b;
+		blockTime = super.randInt(1200, 3200);
 	}
 
-	public static int ranInt(int min, int max){
-		Random rand = new Random();
-		int random=rand.nextInt((max-min)+1)+min;
-		return random;
-	}
+	public int numBursts;    // number of bursts before terminating
+							 // by default <b = 8>
+	public int blockTime;    // time between bursts 1200 - 3200
 }

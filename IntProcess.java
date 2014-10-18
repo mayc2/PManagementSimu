@@ -1,20 +1,10 @@
-import java.util.Random;
-
-public class IntProcess implements Runnable{
-	public int processID;	//1 through 12 by default
-	public int type;		//interactive or cpu bound
-	public int burstTime;
-	
-
-
-
-	public void run(){
-
+public class IntProcess extends Process { // 80% are Interactive
+	public IntProcess(int pid) {
+		super(pid);
+		System.out.println("An interactive process has been created!");
+		super.burstTime = super.randInt(20, 200);
+		responseTime = super.randInt(1000, 4500);
 	}
 
-	public static int ranInt(int min, int max){
-		Random rand = new Random();
-		int random=rand.nextInt((max-min)+1)+min;
-		return random;
-	}
+	public int responseTime;  // 1000 - 4500 until reenters ready queue
 }
