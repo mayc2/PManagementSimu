@@ -74,6 +74,7 @@ main function:
 
 
 
+in each function: //something along these lines
 	create a ready queue
 	create processes
 		-80% need to be Interactive Processes
