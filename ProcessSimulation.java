@@ -1,3 +1,5 @@
+import java.util.Random;
+
 //with no preemption
 class ShortestJobFirst{
 
@@ -45,7 +47,18 @@ class ElapsedTime implements Runnable{
 
 }
 
-public class ProcessSimulation implements Runnable{
+public class ProcessSimulation {
+
+	public static Boolean weightedBinary(double weight) { //returns true <weight> % of the time
+		Random rand = new Random();
+		double randDouble = rand.nextDouble();
+		if (randDouble < weight) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	public static void main(String[] args) {
 
@@ -78,7 +91,7 @@ public class ProcessSimulation implements Runnable{
 			}
 		}
 
-		
+	/*	
 
 
 		ElapsedTime t1 = new ElapsedTime();
@@ -110,11 +123,27 @@ public class ProcessSimulation implements Runnable{
 		catch ( InterruptedException ex )
 		{
 		}
+	*/
+
+		/////////// Above here just a test, also argument parsing not the cleanest but works
+		Boolean cpuAdded = false;
+		Process[] processes = new Process[n];
+		for (int i = 0; i < n; i++) {
+			if (i == (n - 1) && !cpuAdded) { // If only one process left and none are cpu
+				processes[i] = new CpuProcess(i, 8);
+			}
+			else {
+				if (weightedBinary(0.2)) { // Returns true 20% of time for cpu processes
+					cpuAdded = true;
+					processes[i] = new CpuProcess(i, 8);
+				}
+				else { // 80% of time interactive process
+					processes[i] = new IntProcess(i);
+				}
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			System.out.println(processes[i].getClass().getName());
+		}
 	}
-
-
-	public void run(){
-		System.out.println("Test: First Print in run()");		
-	}
-
 }

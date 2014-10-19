@@ -10,10 +10,10 @@ class Process {
 	public int burstTime;   // amount of CPU time to complete its CPU burst
 							//     20 - 200 for Interactive
 							//     200 - 3000 for CPU
-	
-	//public void run(){
-	//
-	//}
+
+	public void refresh() { // Process Timings must vary each time
+		//Override
+	}
 
 	public static int randInt(int min, int max){
 		Random rand = new Random();
