@@ -70,5 +70,18 @@ public class ProcessSimulation {
 		System.out.println("----------------------------------------------------------------------");
 		sjf.statistics();
 		System.out.println("**********************************************************************");
+
+		// Round Robin
+		int t_sl = 100;
+		System.out.println("Round Robin");
+		System.out.println("**********************************************************************");
+		RoundRobin rr = new RoundRobin(processes, m, t_sl);
+		rr.execute();
+		System.out.println("----------------------------------------------------------------------");
+		rr.statistics();
+		System.out.println("**********************************************************************");
+
+
+
 	}
 }
