@@ -71,7 +71,7 @@ public class Algorithm{
 		Arrays.sort(processes, IDComparator);
 	}
 
-	public void Statistics(){
+	public void statistics(){
 		
 		//print turnaround time statistic for current algorithm
 		TurnaroundSort();

@@ -1,27 +1,4 @@
 import java.util.Random;
-import java.util.Queue;
-import java.util.PriorityQueue;
-import java.util.Comparator;
-
-
-class ElapsedTime implements Runnable{
-	int n;
-
-	public ElapsedTime(){
-		this.n=0;
-	}
-
-	public void run(){
-		while(true){
-			this.n += 1;
-		}
-	}
-
-	public void time(){
-		System.out.println("Elapsed Time: " + this.n);
-	}
-
-}
 
 public class ProcessSimulation {
 
@@ -37,7 +14,7 @@ public class ProcessSimulation {
 	}
 
 	public static void main(String[] args) {
-
+////////////////////////////////////////////////////
 		/*	GLOBAL VARIABLES	*/
 		int n=12;	//12 by default
 		int m=4;	//4 by default
@@ -66,42 +43,7 @@ public class ProcessSimulation {
 				return;
 			}
 		}
-
-	/*	
-
-
-		ElapsedTime t1 = new ElapsedTime();
-		System.out.println("Test: First Println");
-		Thread th1 = new Thread(t1);
-		th1.start();
-		t1.time();
-		t1.time();
-		t1.time();
-		t1.time();
-		t1.time();
-		int i=0;
-		while(i!=30000000) ++i;
-		System.out.println("past while");
-		t1.time();
-		t1.time();
-		t1.time();
-
-		try{
-		    while ( Thread.activeCount() > 1 )
-		    {
-		      if ( th1.isAlive() )
-		      {
-		        th1.join();     // BLOCKS
-		      }
-		      System.out.println( "t1 thread terminated" );
-		    }
-		}
-		catch ( InterruptedException ex )
-		{
-		}
-	*/
-
-		/////////// Above here just a test, also argument parsing not the cleanest but works
+////////////////////////////////////////////////////
 		Boolean cpuAdded = false;
 		Process[] processes = new Process[n];
 		for (int i = 0; i < n; i++) {
@@ -118,12 +60,10 @@ public class ProcessSimulation {
 				}
 			}
 		}
-		/*for (int i = 0; i < n; i++) {
-			System.out.println(processes[i].getClass().getName());
-		}*/
 
+		// Shortest Job First
 		ShortestJobFirst sjf = new ShortestJobFirst(processes,m);
 		sjf.execute();
-		sjf.Statistics();
+		sjf.statistics();
 	}
 }
