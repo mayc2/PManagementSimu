@@ -53,17 +53,21 @@ public class ProcessSimulation {
 			else {
 				if (weightedBinary(0.2)) { // Returns true 20% of time for cpu processes
 					cpuAdded = true;
-					processes[i] = new CpuProcess(i+1, 8);
+					processes[i] = new CpuProcess(i + 1, 8);
 				}
 				else { // 80% of time interactive process
-					processes[i] = new IntProcess(i+1);
+					processes[i] = new IntProcess(i + 1);
 				}
 			}
 		}
 
 		// Shortest Job First
+		System.out.println("\nShortest Job First (No Preemption");
+		System.out.println("**********************************************************************");
 		ShortestJobFirst sjf = new ShortestJobFirst(processes,m);
 		sjf.execute();
+		System.out.println("----------------------------------------------------------------------");
 		sjf.statistics();
+		System.out.println("**********************************************************************");
 	}
 }
