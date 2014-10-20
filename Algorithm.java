@@ -1,11 +1,13 @@
 import java.util.Comparator;
 import java.util.Arrays;
+import java.util.Queue;
+import java.util.PriorityQueue;
 
 public class Algorithm{
 	public Process[] processes;
-	private Queue<Process> processQueue;
-	private int cpu_in_queue;
-	private int elapsed_time;
+	public Queue<Process> processQueue;
+	public int cpu_in_queue;
+	public int elapsed_time;
 
 	public Algorithm(Process[] p_){
 		processes=p_;
@@ -69,9 +71,10 @@ public class Algorithm{
 		//print Average CPU utilization
 		avg=0;
 		for(int i = 0; i<processes.length; ++i){ 
+			processes[i].calcCpuUtil();
 			avg+=processes[i].cpuUtil;
 		}
-		avg = avg/(processes.length);
+		avg = (int) (avg/(processes.length));
 		System.out.println("Average CPU utilization: " + avg + "%");
 
 		//print Average CPU utilization of each process
