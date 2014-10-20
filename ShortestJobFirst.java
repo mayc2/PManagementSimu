@@ -9,7 +9,7 @@ public class ShortestJobFirst extends Algorithm{
 	public ShortestJobFirst(Process[] p_, int m_){
 		super(p_,m_);
 		super.readyQueue = new PriorityQueue<>(super.processes.length, super.burstComparator);
-		super.waitingTimeQueue =  new PriorityQueue<>(super.processes.length, super.waitComparator);
+		super.waitingTimeList =  new LinkedList<>();
 		super.cpuList =  new LinkedList<>();
 		super.context_switch_count = 0;
 		super.t_cs = 2;
@@ -34,25 +34,65 @@ public class ShortestJobFirst extends Algorithm{
 	}
 
 	public void incrementTime(int amount){
+		//increase elapsed time by one
 		elapsed_time += amount;
 		Process temp;
+
+		//increase wait time for each process in ready queue
+		Iterator<Process> it = readyQueue.iterator();
+		while(it.hasNext()){
+			temp=it.next();
+			if(cpuList.indexOf(temp) == -1){
+				temp.waitTime++;
+				temp.turnaroundTime++;
+			}
+		}
+
+		//re-add any processes that are ready to go into ready queue
+		for(int j=0; j < waitingTimeList.size(); ++j){
+			temp=waitingTimeList.get(j);
+			if(temp.pType == "CPU-bound process"){
+				temp.blockTime--;
+				if(temp.blockTime == 0){
+					waitingTimeList.remove(temp);
+					waitCompletion(temp);	
+				}
+			}
+			else{
+				temp.responseTime--;
+				if(temp.responseTime == 0){
+					waitingTimeList.remove(temp);
+					waitCompletion(temp);
+				}
+			}
+		}
+
+		//edit remaining time in current burst and handle completions if any occur
 		for(int i = 0; i < cpuList.size(); ++i){
 			temp = cpuList.get(i);
 			temp.remBurstTime--;
+			temp.turnaroundTime++;
 			if(temp.remBurstTime == 0){
-				System.out.println("Removing "+temp.processID+" from cpuList");
+				// System.out.println("Removing "+temp.processID+" from cpuList");
 				temp.endTime=elapsed_time;
 				burstCompletion(temp);
 				cpuList.remove(temp);
 			}
 		}
+
+	}
+
+	public void waitCompletion(Process temp){
+		temp.arrivalTime=elapsed_time;
+		readyQueue.add(temp);
+		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
 	}
 
 	public void burstCompletion(Process currentProcess){
 		currentProcess.totalBurstTime+=currentProcess.burstTime;
 
 		//print process status
-		System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + (currentProcess.getTurnaroundTime(elapsed_time)-1) + "ms, total wait time " + (currentProcess.getWaitTime(elapsed_time,context_switch_count,t_cs)-1) + "ms)");
+		System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + currentProcess.turnaroundTime + "ms, total wait time " + currentProcess.waitTime + "ms)");
 
 		//updates the current process with new times
 		currentProcess.refresh(elapsed_time);
@@ -64,17 +104,17 @@ public class ShortestJobFirst extends Algorithm{
 				currentProcess.totalBurstTime+=currentProcess.burstTime;
 
 				//print process status
-				System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + (currentProcess.getAvgTurnaroundTime()-1) + "ms, avg total wait time " + (currentProcess.getAvgWaitTime()-1) + "ms)");
+				System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + currentProcess.getAvgTurnaroundTime() + "ms, avg total wait time " + currentProcess.getAvgWaitTime() + "ms)");
 
 			}
 			else{
 				currentProcess.remBursts--;
-				waitingTimeQueue.add(currentProcess);
+				waitingTimeList.add(currentProcess);
 			}
 		}
 		//Interactive Process
 		else{
-			waitingTimeQueue.add(currentProcess);
+			waitingTimeList.add(currentProcess);
 		}
 	}
 
@@ -89,47 +129,11 @@ public class ShortestJobFirst extends Algorithm{
 			}
 		}
 
-		//time of completion of previous process
-		int lastAdded=0;
-
 		//while queue has CPU-bound processes run...
 		while(super.cpu_in_queue>0){
 
 			//fills cpu's with processes
 			while(cpuList.size() < m){
-				//numAdded++;
-
-				//handles additions to ready queue 
-				int check=0;
-				Process temp;
-				while(check != 1){
-					temp = super.waitingTimeQueue.poll();
-					if(temp == null){
-						break;
-					}
-					if(temp.pType == "CPU-bound process"){
-						if((temp.blockTime+temp.arrivalTime) < super.elapsed_time){
-							temp.arrivalTime=super.elapsed_time;
-							super.readyQueue.add(temp);
-							System.out.println("[time " + super.elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
-						}
-						else{
-							check = 1;
-							super.waitingTimeQueue.add(temp);
-						}
-					}
-					else{
-						if((temp.responseTime+temp.arrivalTime) < super.elapsed_time){
-							temp.arrivalTime=super.elapsed_time;
-							super.readyQueue.add(temp);
-							System.out.println("[time " + super.elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
-						}	
-						else{
-							check = 1;
-							super.waitingTimeQueue.add(temp);
-						}
-					}
-				}
 
 				//polls shortest job from the queue
 				Process xProcess = readyQueue.poll();	
@@ -144,19 +148,13 @@ public class ShortestJobFirst extends Algorithm{
 					context_switch_count++;
 					incrementTime(t_cs);
 				}*/
-				System.out.println("adding "+xProcess.processID+" to cpuList");
+				// System.out.println("adding "+xProcess.processID+" to cpuList");
+
 				cpuList.add(xProcess);
 			}
 			
 			incrementTime(1);
 
-			/*//polls first process running on a cpu to be completed
-			Process currentProcess = cpuList.poll();
-			
-			//add burst time to elapsed time + total burst time for process
-			elapsed_time += findElapsedTime(lastAdded,currentProcess.arrivalTime,(currentProcess.arrivalTime + currentProcess.burstTime));
-			lastAdded=elapsed_time-tracker;
-*/
 		}
 	}
 				

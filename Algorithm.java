@@ -8,7 +8,7 @@ import java.util.*;
 public class Algorithm{
 	public Process[] processes;
 	public Queue<Process> readyQueue;
-	public Queue<Process> waitingTimeQueue;
+	public List<Process> waitingTimeList;
 	public List<Process> cpuList;
 	public int cpu_in_queue;
 	public int elapsed_time;

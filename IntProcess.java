@@ -9,6 +9,11 @@ public class IntProcess extends Process { // 80% are Interactive
 
 	@Override
 	public void refresh(int et) {
+		totalTurnaroundTime+=turnaroundTime;
+		turnaroundTime=0;
+		totalWaitTime+=waitTime;
+		waitTime=0;
+		numWaitTimes+=1;
 		super.arrivalTime = et;
 		super.burstTime = super.randInt(20, 200);
 		remBurstTime=burstTime;
@@ -17,6 +22,6 @@ public class IntProcess extends Process { // 80% are Interactive
 
 	@Override
 	public int getAvgTurnaroundTime(){
-		return (int) (super.totalTurnaroundTime / super.numWaitTimes);		
+		return (int) (totalTurnaroundTime / numWaitTimes);		
 	}
 }
