@@ -13,6 +13,7 @@ public class Algorithm{
 	public int cpu_in_queue;
 	public int elapsed_time;
 	public int context_switch_count;
+	public int numAdded;
 	public int t_cs;
 	public int tmp1;
 	public int m;

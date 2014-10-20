@@ -14,6 +14,7 @@ public class ShortestJobFirst extends Algorithm{
 		super.context_switch_count = 0;
 		super.t_cs = 2;
 		tmp1=0;
+		numAdded=0;
 	}
 
 	//finds time to increment elapsed time by after completion of a process
@@ -37,9 +38,12 @@ public class ShortestJobFirst extends Algorithm{
 		Process temp;
 		for(int i = 0; i < cpuList.size(); ++i){
 			temp = cpuList.get(i);
-			temp.burstTime--;
-			if(burstTime==0){
+			temp.remBurstTime--;
+			if(temp.remBurstTime == 0){
+				System.out.println("Removing "+temp.processID+" from cpuList");
+				temp.endTime=elapsed_time;
 				burstCompletion(temp);
+				cpuList.remove(temp);
 			}
 		}
 	}
@@ -48,7 +52,7 @@ public class ShortestJobFirst extends Algorithm{
 		currentProcess.totalBurstTime+=currentProcess.burstTime;
 
 		//print process status
-		System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + currentProcess.getTurnaroundTime(elapsed_time,tmp1) + "ms, total wait time " + currentProcess.getWaitTime(elapsed_time,context_switch_count,t_cs) + "ms)");
+		System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + (currentProcess.getTurnaroundTime(elapsed_time)-1) + "ms, total wait time " + (currentProcess.getWaitTime(elapsed_time,context_switch_count,t_cs)-1) + "ms)");
 
 		//updates the current process with new times
 		currentProcess.refresh(elapsed_time);
@@ -60,7 +64,7 @@ public class ShortestJobFirst extends Algorithm{
 				currentProcess.totalBurstTime+=currentProcess.burstTime;
 
 				//print process status
-				System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + currentProcess.getAvgTurnaroundTime() + "ms, avg total wait time " + currentProcess.getAvgWaitTime() + "ms)");
+				System.out.println("[time " + elapsed_time + "] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + (currentProcess.getAvgTurnaroundTime()-1) + "ms, avg total wait time " + (currentProcess.getAvgWaitTime()-1) + "ms)");
 
 			}
 			else{
@@ -75,6 +79,8 @@ public class ShortestJobFirst extends Algorithm{
 	}
 
 	public void execute(){
+
+		//adds all original processes in array to the ready queue at time 0ms
 		for(int i = 0; i < super.processes.length; ++i){
 			super.readyQueue.add(super.processes[i]);
 			System.out.println("[time 0ms] " + super.processes[i].pType + " ID " + super.processes[i].processID + " entered ready queue (requires " + super.processes[i].burstTime + "ms CPU time)");
@@ -90,12 +96,9 @@ public class ShortestJobFirst extends Algorithm{
 		while(super.cpu_in_queue>0){
 
 			//fills cpu's with processes
-			int tracker=0;
 			while(cpuList.size() < m){
-				if(cpuList.size()<3){
-					System.out.println("cpuList SIZE: "+cpuList.size());
-					System.out.println("elapsed_time is "+elapsed_time);
-				}
+				//numAdded++;
+
 				//handles additions to ready queue 
 				int check=0;
 				Process temp;
@@ -132,28 +135,28 @@ public class ShortestJobFirst extends Algorithm{
 				Process xProcess = readyQueue.poll();	
 				
 				if(xProcess == null){
-					incrementTime();
+					incrementTime(1);
 					continue;
 				}
 
-				if(elapsed_time != 0){
+/*				if(numAdded > 4){
 					//context switch!
 					context_switch_count++;
-					elapsed_time+=t_cs;
-					tmp1=1;
-				}
-
-				xProcess.arrivalTime = elapsed_time;
+					incrementTime(t_cs);
+				}*/
+				System.out.println("adding "+xProcess.processID+" to cpuList");
 				cpuList.add(xProcess);
 			}
 			
-			//polls first process running on a cpu to be completed
+			incrementTime(1);
+
+			/*//polls first process running on a cpu to be completed
 			Process currentProcess = cpuList.poll();
 			
 			//add burst time to elapsed time + total burst time for process
 			elapsed_time += findElapsedTime(lastAdded,currentProcess.arrivalTime,(currentProcess.arrivalTime + currentProcess.burstTime));
 			lastAdded=elapsed_time-tracker;
-
+*/
 		}
 	}
 				

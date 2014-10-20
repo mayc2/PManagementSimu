@@ -8,6 +8,7 @@ public class CpuProcess extends Process { // 20% are CPU
 		super.remBursts = b;
 		super.burstTime = super.randInt(200, 3000);
 		super.blockTime = super.randInt(1200, 3200);
+		remBurstTime=burstTime;
 	}
 
 	@Override
@@ -15,6 +16,7 @@ public class CpuProcess extends Process { // 20% are CPU
 		super.arrivalTime = et;
 		super.burstTime = super.randInt(200, 3000);
 		super.blockTime = super.randInt(1200, 3200);
+		remBurstTime=burstTime;
 	}
 
 	@Override

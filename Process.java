@@ -4,6 +4,7 @@ import java.lang.String;
 public class Process {
 	public String pType;
 	public int arrivalTime;
+	public int endTime;
 	public int processID;	// 1 through 12 by default <n = 12>
 	public int turnaroundTime;
 	public int waitTime;
@@ -17,6 +18,7 @@ public class Process {
 	public int blockTime;    // time between bursts 1200 - 3200
 	public int numBursts;    // number of bursts before terminating
 							 // by default <b = 8>
+	public int remBurstTime;
 	public int burstTime;   // amount of CPU time to complete its CPU burst
 							//     20 - 200 for Interactive
 							//     200 - 3000 for CPU
@@ -28,7 +30,8 @@ public class Process {
 		waitTime = 0;
 		cpuUtil = 0;
 		pType = "";
-		arrivalTime = 0;
+		arrivalTime = -1;
+		endTime=-1;
 		totalTurnaroundTime = 0;
 		totalBurstTime=0;
 		numWaitTimes = 0;
@@ -46,7 +49,7 @@ public class Process {
 	}
 
 	public int getWaitTime(int et, int n, int t_cs){
-		int time = (((et-(n*t_cs)) - (arrivalTime-(n*t_cs))) - burstTime);
+		int time = getTurnaroundTime(et) - burstTime;
 		totalWaitTime += time;
 		numWaitTimes++;
 		return time;		
@@ -56,14 +59,9 @@ public class Process {
 		return (int) (totalWaitTime/numWaitTimes);
 	}
 
-	public int getTurnaroundTime(int et, int check){
+	public int getTurnaroundTime(int et){
 		int temp;
-		if(check == 1){
-			temp = (et - arrivalTime - 2);
-		}
-		else{
-			temp = (et - arrivalTime);
-		}
+		temp = (et - arrivalTime);
 		totalTurnaroundTime+=temp;
 		return temp;
 	}

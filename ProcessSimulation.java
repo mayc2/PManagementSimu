@@ -17,7 +17,7 @@ public class ProcessSimulation {
 ////////////////////////////////////////////////////
 		/*	GLOBAL VARIABLES	*/
 		int n=12;	//12 by default
-		int m=4;	//4 by default
+		int m=1;	//4 by default
 
 		/*	HANDLES CLI ARGUMENTS	*/
 		//Usage: java ProcessSimulation.java processes(n) cpu's(m)
