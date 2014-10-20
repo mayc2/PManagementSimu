@@ -2,10 +2,22 @@ import java.util.Random;
 import java.lang.String;
 
 public class Process {
+	// Base Variables
+	public int processID;	// 1 through 12 by default <n = 12>
 	public String pType;
+	public int burstTime;   // amount of CPU time to complete its CPU burst
+							//     20 - 200 for Interactive
+							//     200 - 3000 for CPU
+	// CPU Only
+	public int blockTime;   // time between bursts 1200 - 3200
+	public int numBursts;   // number of bursts before terminating
+							// by default <b = 8>
+	public int remBursts;   // remaining number of bursts
+	// Interactive Only
+	public int responseTime;  // 1000 - 4500 until reenters ready queue
+	// Statistics
 	public int arrivalTime;
 	public int endTime;
-	public int processID;	// 1 through 12 by default <n = 12>
 	public int turnaroundTime;
 	public int waitTime;
 	public int cpuUtil;
@@ -13,18 +25,9 @@ public class Process {
 	public int totalTurnaroundTime;
 	public int totalWaitTime;
 	public int numWaitTimes;
-	public int remBursts;
-	public int responseTime;  // 1000 - 4500 until reenters ready queue
-	public int blockTime;    // time between bursts 1200 - 3200
-	public int numBursts;    // number of bursts before terminating
-							 // by default <b = 8>
 	public int remBurstTime;
-	public int burstTime;   // amount of CPU time to complete its CPU burst
-							//     20 - 200 for Interactive
-							//     200 - 3000 for CPU
 
 	public Process(int pid) {
-		//System.out.println("A new process has been created");
 		processID = pid;
 		turnaroundTime = 0;
 		waitTime = 0;
@@ -32,6 +35,7 @@ public class Process {
 		pType = "";
 		arrivalTime = -1;
 		endTime=-1;
+		arrivalTime = 0;
 		totalTurnaroundTime = 0;
 		totalBurstTime=0;
 		numWaitTimes = 0;
