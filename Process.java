@@ -13,6 +13,10 @@ public class Process {
 	public int totalWaitTime;
 	public int numWaitTimes;
 	public int remBursts;
+	public int responseTime;  // 1000 - 4500 until reenters ready queue
+	public int blockTime;    // time between bursts 1200 - 3200
+	public int numBursts;    // number of bursts before terminating
+							 // by default <b = 8>
 	public int burstTime;   // amount of CPU time to complete its CPU burst
 							//     20 - 200 for Interactive
 							//     200 - 3000 for CPU
@@ -26,6 +30,7 @@ public class Process {
 		pType = "";
 		arrivalTime = 0;
 		totalTurnaroundTime = 0;
+		totalBurstTime=0;
 		numWaitTimes = 0;
 		totalWaitTime = 0;
 	}
@@ -40,8 +45,8 @@ public class Process {
 		return randomNum;
 	}
 
-	public int getWaitTime(int et){
-		int time = ((et - arrivalTime) - burstTime);
+	public int getWaitTime(int et, int n, int t_cs){
+		int time = (((et-(n*t_cs)) - (arrivalTime-(n*t_cs))) - burstTime);
 		totalWaitTime += time;
 		numWaitTimes++;
 		return time;		
@@ -51,8 +56,16 @@ public class Process {
 		return (int) (totalWaitTime/numWaitTimes);
 	}
 
-	public int getTurnaroundTime(int et){
-		return (et - arrivalTime);
+	public int getTurnaroundTime(int et, int check){
+		int temp;
+		if(check == 1){
+			temp = (et - arrivalTime - 2);
+		}
+		else{
+			temp = (et - arrivalTime);
+		}
+		totalTurnaroundTime+=temp;
+		return temp;
 	}
 
 	public int getAvgTurnaroundTime(){

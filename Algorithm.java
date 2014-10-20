@@ -5,9 +5,12 @@ import java.util.PriorityQueue;
 
 public class Algorithm{
 	public Process[] processes;
-	public Queue<Process> processQueue;
+	public Queue<Process> readyQueue;
+	public Queue<Process> waitingTimeQueue;
 	public int cpu_in_queue;
 	public int elapsed_time;
+	public int context_switch_count;
+	public int t_cs;
 
 	public Algorithm(Process[] p_){
 		processes=p_;
@@ -15,6 +18,13 @@ public class Algorithm{
 		elapsed_time=0;
 	}
 	
+	public static Comparator<Process> burstComparator = new Comparator<Process>(){
+        @Override
+        public int compare(Process p1, Process p2) {
+			return (int) (p1.burstTime - p2.burstTime);
+        }
+    };
+
 	public static Comparator<Process> turnaroundComp = new Comparator<Process>(){
         @Override
         public int compare(Process p1, Process p2) {
@@ -22,30 +32,30 @@ public class Algorithm{
         }
     };
 
-    public static Comparator<Process> burstComparator = new Comparator<Process>(){
-        @Override
-        public int compare(Process p1, Process p2) {
-			return (int) (p1.burstTime - p2.burstTime);
-        }
-    };
-
     public void TurnaroundSort(){
 		Arrays.sort(processes, turnaroundComp);
 	}
 
+	public static Comparator<Process> waitComparator = new Comparator<Process>(){
+        @Override
+        public int compare(Process p1, Process p2) {
+			return (int) (p1.waitTime - p2.waitTime);
+        }
+    };
+
 	public void WaitSort(){
-		Arrays.sort(processes, new Comparator<Process>(){
-			public int compare(Process p1, Process p2){
-		    	return (int) (p1.waitTime - p2.waitTime);
-		  	}
-		});
+		Arrays.sort(processes, waitComparator);
 	}
+
+	public static Comparator<Process> IDComparator = new Comparator<Process>(){
+        @Override
+        public int compare(Process p1, Process p2) {
+			return (int) (p1.processID - p2.processID);
+        }
+    };
+
 	public void IDSort(){
-		Arrays.sort(processes, new Comparator<Process>(){
-			public int compare(Process p1, Process p2){
-		    	return (int) (p1.processID - p2.processID);
-		  	}
-		});
+		Arrays.sort(processes, IDComparator);
 	}
 
 	public void Statistics(){
@@ -82,6 +92,7 @@ public class Algorithm{
 		System.out.println("");
 		System.out.println("Average CPU utilization per process:");
 		for(int i=0; i < processes.length; ++i){
+			System.out.println("totalBurstTime is " + processes[i].totalBurstTime + " and totalTurnaroundTime is " + processes[i].totalTurnaroundTime);
 			System.out.println("process " + processes[i].processID + ": " + processes[i].cpuUtil + "%");
 		}
 	}

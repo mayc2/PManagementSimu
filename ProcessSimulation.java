@@ -106,20 +106,24 @@ public class ProcessSimulation {
 		Process[] processes = new Process[n];
 		for (int i = 0; i < n; i++) {
 			if (i == (n - 1) && !cpuAdded) { // If only one process left and none are cpu
-				processes[i] = new CpuProcess(i, 8);
+				processes[i] = new CpuProcess(i+1, 8);
 			}
 			else {
 				if (weightedBinary(0.2)) { // Returns true 20% of time for cpu processes
 					cpuAdded = true;
-					processes[i] = new CpuProcess(i, 8);
+					processes[i] = new CpuProcess(i+1, 8);
 				}
 				else { // 80% of time interactive process
-					processes[i] = new IntProcess(i);
+					processes[i] = new IntProcess(i+1);
 				}
 			}
 		}
 		/*for (int i = 0; i < n; i++) {
 			System.out.println(processes[i].getClass().getName());
 		}*/
+
+		ShortestJobFirst sjf = new ShortestJobFirst(processes);
+		sjf.execute();
+		sjf.Statistics();
 	}
 }
