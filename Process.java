@@ -35,7 +35,6 @@ public class Process {
 		pType = "";
 		arrivalTime = -1;
 		endTime=-1;
-		arrivalTime = 0;
 		totalTurnaroundTime = 0;
 		totalBurstTime=0;
 		numWaitTimes = 0;
