@@ -3,33 +3,6 @@ import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 
-//with no preemption
-class ShortestJobFirst{
-
-} 
-
-//with preemption
-class ShortestJobFirstPre{
-
-}
-
-//with preemption via configurable time slice TSLICE=100MS
-class RoundRobin{
-
-}
-
-/*
- 	with random priority levels 0-4 assigned to processes at 
- 	the onset (low numbers indicate high priority); processes 
- 	with the same priority are processed via the FCFS algorithm; 
- 	higher-priority processes entering the ready queue may 
- 	preempt a running process; aging causes lower-priority 
- 	processes to increase their priority by 1 every elapsed 
- 	1200 milliseconds
- */
-class PreemptivePriority{
-
-}
 
 class ElapsedTime implements Runnable{
 	int n;
