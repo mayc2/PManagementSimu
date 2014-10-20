@@ -2,7 +2,7 @@ import java.util.Random;
 
 class Process {
 	public Process(int pid) {
-		System.out.println("A new process has been created");
+		//System.out.println("A new process has been created");
 		processID = pid;
 	}
 

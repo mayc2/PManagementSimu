@@ -1,7 +1,7 @@
 public class CpuProcess extends Process { // 20% are CPU
 	public CpuProcess(int pid, int b) {
 		super(pid);
-		System.out.println("I'm CPU Bound!");
+		//System.out.println("I'm CPU Bound!");
 		numBursts = b;
 		super.burstTime = super.randInt(200, 3000);
 		blockTime = super.randInt(1200, 3200);
