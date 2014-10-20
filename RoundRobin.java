@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 
 //with preemption via configurable time slice TSLICE=100MS
 class RoundRobin extends Algorithm{
-	public RoundRobin(Process[] p_){
-		super(p_);
+	public RoundRobin(Process[] p_, int m_){
+		super(p_,m_);
 	}
 }

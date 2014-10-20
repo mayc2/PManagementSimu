@@ -2,21 +2,34 @@ import java.util.Comparator;
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.PriorityQueue;
+import java.util.concurrent.Semaphore;
+import java.util.*;
 
 public class Algorithm{
 	public Process[] processes;
 	public Queue<Process> readyQueue;
 	public Queue<Process> waitingTimeQueue;
+	public List<Process> cpuList;
 	public int cpu_in_queue;
 	public int elapsed_time;
 	public int context_switch_count;
 	public int t_cs;
+	public int tmp1;
+	public int m;
 
-	public Algorithm(Process[] p_){
+	public Algorithm(Process[] p_, int m_){
 		processes=p_;
 		cpu_in_queue=0;
 		elapsed_time=0;
+		m=m_;
 	}
+
+	public static Comparator<Process> endTimeComparator = new Comparator<Process>(){
+        @Override
+        public int compare(Process p1, Process p2) {
+			return (int) ((p1.arrivalTime + p1.burstTime) - (p2.arrivalTime + p2.burstTime));
+        }
+    };
 	
 	public static Comparator<Process> burstComparator = new Comparator<Process>(){
         @Override
@@ -25,7 +38,7 @@ public class Algorithm{
         }
     };
 
-	public static Comparator<Process> turnaroundComp = new Comparator<Process>(){
+    public static Comparator<Process> turnaroundComp = new Comparator<Process>(){
         @Override
         public int compare(Process p1, Process p2) {
 			return (int) (p1.turnaroundTime - p2.turnaroundTime);

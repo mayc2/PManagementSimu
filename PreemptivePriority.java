@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
  	1200 milliseconds
  */
 class PreemptivePriority extends Algorithm{
-	public PreemptivePriority(Process[] p_){
-		super(p_);
+	public PreemptivePriority(Process[] p_, int m_){
+		super(p_,m_);
 	}
 }

@@ -3,8 +3,8 @@ import java.util.PriorityQueue;
 
 //with preemption
 class ShortestJobFirstPre extends Algorithm{
-	public ShortestJobFirstPre(Process[] p_){
-		super(p_);
+	public ShortestJobFirstPre(Process[] p_, int m_){
+		super(p_,m_);
 	}
 /*
 	public void execute(){

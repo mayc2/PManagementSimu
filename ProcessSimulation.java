@@ -122,7 +122,7 @@ public class ProcessSimulation {
 			System.out.println(processes[i].getClass().getName());
 		}*/
 
-		ShortestJobFirst sjf = new ShortestJobFirst(processes);
+		ShortestJobFirst sjf = new ShortestJobFirst(processes,m);
 		sjf.execute();
 		sjf.Statistics();
 	}
