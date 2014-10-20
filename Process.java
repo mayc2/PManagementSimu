@@ -37,7 +37,7 @@ public class Process {
 		endTime=-1;
 		totalTurnaroundTime = 0;
 		totalBurstTime=0;
-		numWaitTimes = 0;
+		numWaitTimes = 1;
 		totalWaitTime = 0;
 	}
 
@@ -51,22 +51,8 @@ public class Process {
 		return randomNum;
 	}
 
-	public int getWaitTime(int et, int n, int t_cs){
-		int time = getTurnaroundTime(et) - burstTime;
-		totalWaitTime += time;
-		numWaitTimes++;
-		return time;		
-	}
-
 	public int getAvgWaitTime(){
 		return (int) (totalWaitTime/numWaitTimes);
-	}
-
-	public int getTurnaroundTime(int et){
-		int temp;
-		temp = (et - arrivalTime);
-		totalTurnaroundTime+=temp;
-		return temp;
 	}
 
 	public int getAvgTurnaroundTime(){
