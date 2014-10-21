@@ -1,3 +1,5 @@
+// Paul Chiappetta and Chris May
+
 import java.util.*;
 
 //with preemption
@@ -35,7 +37,7 @@ class ShortestJobFirstPre extends Algorithm{
 				temp.blockTime--;
 				if(temp.blockTime == 0){
 					waitingTimeList.remove(temp);
-					waitCompletion(temp);	
+					waitCompletion(temp);
 				}
 			}
 			else{
@@ -64,19 +66,20 @@ class ShortestJobFirstPre extends Algorithm{
 
 	public void waitCompletion(Process temp){
 		temp.arrivalTime=elapsed_time;
-		readyQueue.add(temp);
 		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
 
 		Process currentProcess;
 		for(int i = 0; i < cpuList.size(); ++i){
 			currentProcess = cpuList.get(i);
-			if(temp.burstTime < (currentProcess.remBurstTime)){
+			if(temp.remBurstTime < (currentProcess.remBurstTime)){
 				cpuList.remove(currentProcess);
 				readyQueue.add(currentProcess);
 				cpuList.add(temp);
 				System.out.println("[time " + elapsed_time + "ms] Context switch (swapping out process "+ currentProcess.processID +" for process ID "+ temp.processID+")");
+				return;
 			}
 		}
+		readyQueue.add(temp);
 	}
 
 	public void burstCompletion(Process currentProcess){
@@ -84,13 +87,12 @@ class ShortestJobFirstPre extends Algorithm{
 
 		//print process status
 		System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + currentProcess.turnaroundTime + "ms, total wait time " + currentProcess.waitTime + "ms)");
-
 		//updates the current process with new times
 		currentProcess.refresh(elapsed_time);
 
 		//Identify type of process and implement
 		if(currentProcess.pType == "CPU-bound process"){
-			if(currentProcess.remBursts==1){
+			if(currentProcess.remBursts == 1){
 				cpu_in_queue--;
 				currentProcess.remBursts--;
 

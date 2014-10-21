@@ -1,3 +1,5 @@
+// Paul Chiappetta and Chris May
+
 import java.util.Random;
 
 public class ProcessSimulation {

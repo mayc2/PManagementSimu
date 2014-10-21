@@ -1,3 +1,5 @@
+// Paul Chiappetta and Chris May
+
 public class CpuProcess extends Process { // 20% are CPU
 
 	public CpuProcess(int pid, int b) {

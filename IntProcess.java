@@ -1,9 +1,11 @@
+// Paul Chiappetta and Chris May
+
 public class IntProcess extends Process { // 80% are Interactive
 	public IntProcess(int pid) {
 		super(pid);
 		super.pType="Interactive process";
 		super.burstTime = super.randInt(20, 200);
-		super.responseTime = super.randInt(1000, 4500);
+		super.responseTime = super.randInt(4000, 4500);
 		remBurstTime=burstTime;
 	}
 
