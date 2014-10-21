@@ -96,8 +96,8 @@ class PreemptivePriority extends Algorithm{
 			if(temp.priority < currentProcess.priority){
 				cpuList.remove(currentProcess);
 				readyQueue.add(currentProcess);
-
 				cpuList.add(temp);
+				System.out.println("[time " + elapsed_time + "ms] Context switch (swapping out process "+ currentProcess.processID +" for process ID "+ temp.processID+")");
 			}
 		}
 	}

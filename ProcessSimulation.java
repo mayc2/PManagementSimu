@@ -62,8 +62,8 @@ public class ProcessSimulation {
 			}
 		}
 
-		// Shortest Job First
-/*		System.out.println("\nShortest Job First (No Preemption)");
+/*		// Shortest Job First
+		System.out.println("\nShortest Job First (No Preemption)");
 		System.out.println("**********************************************************************");
 		ShortestJobFirst sjf = new ShortestJobFirst(processes, m);
 		sjf.execute();
@@ -71,6 +71,15 @@ public class ProcessSimulation {
 		sjf.statistics();
 		System.out.println("**********************************************************************");
 */
+		// Shortest Job First - Preemption
+		System.out.println("\nShortest Job First (w/ Preemption)");
+		System.out.println("**********************************************************************");
+		ShortestJobFirstPre sjfp = new ShortestJobFirstPre(processes, m);
+		sjfp.execute();
+		System.out.println("----------------------------------------------------------------------");
+		sjfp.statistics();
+		System.out.println("**********************************************************************");
+
 /*		// Round Robin
 		int t_sl = 100;
 		System.out.println("Round Robin");
@@ -80,7 +89,7 @@ public class ProcessSimulation {
 		System.out.println("----------------------------------------------------------------------");
 		rr.statistics();
 		System.out.println("**********************************************************************");
-*/
+
 
 		// Preemptive Priority
 		System.out.println("Preemptive Priority");
@@ -90,7 +99,7 @@ public class ProcessSimulation {
 		System.out.println("----------------------------------------------------------------------");
 		pp.statistics();
 		System.out.println("**********************************************************************");
-
+*/
 
 	}
 }
