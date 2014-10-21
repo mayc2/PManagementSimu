@@ -17,22 +17,6 @@ public class ShortestJobFirst extends Algorithm{
 		numAdded=0;
 	}
 
-	//finds time to increment elapsed time by after completion of a process
-	public int findElapsedTime(int lastEndTime, int startTime, int endTime){
-		int temp;
-		if(lastEndTime>startTime){
-			temp = lastEndTime - startTime;
-			return endTime - temp;
-		}
-		else if (lastEndTime < startTime){
-			temp = startTime-lastEndTime;
-			return temp + (endTime - startTime);
-		}
-		else{
-			return endTime - startTime;
-		}
-	}
-
 	public void incrementTime(int amount){
 		//increase elapsed time by one
 		elapsed_time += amount;

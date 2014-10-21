@@ -12,6 +12,7 @@ public class Algorithm{
 	public int t_cs;
 	public int tmp1;
 	public int m;
+	public int priority;
 
 	public Algorithm(Process[] p_, int m_){
 		processes=p_;
@@ -25,6 +26,21 @@ public class Algorithm{
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 		return randomNum;
 	}
+
+	public static Comparator<Process> priorityComparator = new Comparator<Process>(){
+        @Override
+        public int compare(Process p1, Process p2) {
+			if(p1.priority > p2.priority){
+				return 1;
+			}
+			else if(p1.priority < p2.priority){
+				return -1;
+			}
+			else{
+				return (int) ((p1.arrivalTime) - (p2.arrivalTime));	
+			}
+        }
+    };
 
 	public static Comparator<Process> endTimeComparator = new Comparator<Process>(){
         @Override
