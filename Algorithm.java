@@ -123,7 +123,6 @@ public class Algorithm{
 		System.out.println("");
 		System.out.println("Average CPU utilization per process:");
 		for(int i=0; i < processes.length; ++i){
-			System.out.println("ID "+processes[i].processID+ " totalBurstTime is " + processes[i].totalBurstTime + " and totalTurnaroundTime is " + processes[i].totalTurnaroundTime);
 			System.out.println("process " + processes[i].processID + ": " + processes[i].cpuUtil + "%");
 		}
 	}
