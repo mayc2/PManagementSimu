@@ -66,6 +66,17 @@ class ShortestJobFirstPre extends Algorithm{
 		temp.arrivalTime=elapsed_time;
 		readyQueue.add(temp);
 		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
+
+		Process currentProcess;
+		for(int i = 0; i < cpuList.size(); ++i){
+			currentProcess = cpuList.get(i);
+			if(temp.burstTime < (currentProcess.remBurstTime)){
+				cpuList.remove(currentProcess);
+				readyQueue.add(currentProcess);
+				cpuList.add(temp);
+				System.out.println("[time " + elapsed_time + "ms] Context switch (swapping out process "+ currentProcess.processID +" for process ID "+ temp.processID+")");
+			}
+		}
 	}
 
 	public void burstCompletion(Process currentProcess){
