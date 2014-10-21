@@ -69,7 +69,13 @@ class RoundRobin extends Algorithm{
 	}
 
 	public void sliceCompletion(Process temp) {
-		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " preempted");
+		if (readyQueue.peek() != null) {
+			System.out.println("[time " + elapsed_time + "ms] Context switch (swapping out process ID " + temp.processID + " for process ID " + readyQueue.peek().processID);
+		}
+		else {
+			System.out.println("[time " + elapsed_time + "ms] Context switch (swapping out process ID " + temp.processID + " for process ID " + waitingTimeList.get(0).processID);
+
+		}
 		readyQueue.add(temp);
 	}
 

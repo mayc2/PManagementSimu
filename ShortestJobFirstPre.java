@@ -1,10 +1,16 @@
-import java.util.Queue;
-import java.util.PriorityQueue;
+import java.util.*;
 
 //with preemption
 class ShortestJobFirstPre extends Algorithm{
 	public ShortestJobFirstPre(Process[] p_, int m_){
 		super(p_,m_);
+		super.readyQueue = new PriorityQueue<>(super.processes.length, super.burstComparator);
+		super.waitingTimeList =  new LinkedList<>();
+		super.cpuList =  new LinkedList<>();
+		super.context_switch_count = 0;
+		super.t_cs = 2;
+		tmp1=0;
+		numAdded=0;
 	}
 
 	public void incrementTime(int amount){
