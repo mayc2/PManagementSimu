@@ -28,6 +28,8 @@ public class Process {
 	public int remBurstTime;
 	public int priority;
 
+	public int timeWithCpu;
+
 	public Process(int pid) {
 		processID = pid;
 		turnaroundTime = 0;
@@ -40,6 +42,7 @@ public class Process {
 		totalBurstTime=0;
 		numWaitTimes = 1;
 		totalWaitTime = 0;
+		timeWithCpu = 0;
 		priority=randInt(0,4);
 	}
 
