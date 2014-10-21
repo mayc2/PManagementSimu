@@ -130,7 +130,7 @@ public class ShortestJobFirst extends Algorithm{
 		}
 
 		//while queue has CPU-bound processes run...
-		while(super.cpu_in_queue>0){
+		while(super.cpu_in_queue>0) {
 
 			//fills cpu's with processes
 			while(cpuList.size() < m){
@@ -142,20 +142,9 @@ public class ShortestJobFirst extends Algorithm{
 					incrementTime(1);
 					continue;
 				}
-
-/*				if(numAdded > 4){
-					//context switch!
-					context_switch_count++;
-					incrementTime(t_cs);
-				}*/
-				// System.out.println("adding "+xProcess.processID+" to cpuList");
-
 				cpuList.add(xProcess);
 			}
-			
 			incrementTime(1);
-
 		}
 	}
-				
 }
