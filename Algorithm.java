@@ -1,8 +1,3 @@
-import java.util.Comparator;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.PriorityQueue;
-import java.util.concurrent.Semaphore;
 import java.util.*;
 
 public class Algorithm{
@@ -23,6 +18,12 @@ public class Algorithm{
 		cpu_in_queue=0;
 		elapsed_time=0;
 		m=m_;
+	}
+
+	public int randInt(int min, int max){
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		return randomNum;
 	}
 
 	public static Comparator<Process> endTimeComparator = new Comparator<Process>(){
@@ -106,7 +107,7 @@ public class Algorithm{
 		System.out.println("");
 		System.out.println("Average CPU utilization per process:");
 		for(int i=0; i < processes.length; ++i){
-			System.out.println("totalBurstTime is " + processes[i].totalBurstTime + " and totalTurnaroundTime is " + processes[i].totalTurnaroundTime);
+			System.out.println("ID "+processes[i].processID+ " totalBurstTime is " + processes[i].totalBurstTime + " and totalTurnaroundTime is " + processes[i].totalTurnaroundTime);
 			System.out.println("process " + processes[i].processID + ": " + processes[i].cpuUtil + "%");
 		}
 	}

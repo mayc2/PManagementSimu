@@ -51,8 +51,13 @@ public class Process {
 		return randomNum;
 	}
 
+	public int getWaitTime(){
+		return turnaroundTime - burstTime;
+	}
+
 	public int getAvgWaitTime(){
-		return (int) (totalWaitTime/numWaitTimes);
+		//Override
+		return 0;
 	}
 
 	public int getAvgTurnaroundTime(){

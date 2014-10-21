@@ -96,12 +96,12 @@ public class ShortestJobFirst extends Algorithm{
 
 		//updates the current process with new times
 		currentProcess.refresh(elapsed_time);
-		
+
 		//Identify type of process and implement
 		if(currentProcess.pType == "CPU-bound process"){
 			if(currentProcess.remBursts==1){
 				cpu_in_queue--;
-				currentProcess.totalBurstTime+=currentProcess.burstTime;
+				currentProcess.remBursts--;
 
 				//print process status
 				System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + currentProcess.getAvgTurnaroundTime() + "ms, avg total wait time " + currentProcess.getAvgWaitTime() + "ms)");
@@ -116,6 +116,7 @@ public class ShortestJobFirst extends Algorithm{
 		else{
 			waitingTimeList.add(currentProcess);
 		}
+
 	}
 
 	public void execute(){
