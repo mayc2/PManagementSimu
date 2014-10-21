@@ -27,7 +27,6 @@ public class Process {
 	public int numWaitTimes;
 	public int remBurstTime;
 	public int priority;
-
 	public int timeWithCpu;
 
 	public Process(int pid) {

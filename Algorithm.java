@@ -12,7 +12,6 @@ public class Algorithm{
 	public int t_cs;
 	public int tmp1;
 	public int m;
-	public int priority;
 
 	public Algorithm(Process[] p_, int m_){
 		processes=p_;

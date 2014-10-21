@@ -71,7 +71,7 @@ public class ProcessSimulation {
 		sjf.statistics();
 		System.out.println("**********************************************************************");
 */
-		// Round Robin
+/*		// Round Robin
 		int t_sl = 100;
 		System.out.println("Round Robin");
 		System.out.println("**********************************************************************");
@@ -80,7 +80,16 @@ public class ProcessSimulation {
 		System.out.println("----------------------------------------------------------------------");
 		rr.statistics();
 		System.out.println("**********************************************************************");
+*/
 
+		// Preemptive Priority
+		System.out.println("Preemptive Priority");
+		System.out.println("**********************************************************************");
+		PreemptivePriority pp = new PreemptivePriority(processes, m);
+		pp.execute();
+		System.out.println("----------------------------------------------------------------------");
+		pp.statistics();
+		System.out.println("**********************************************************************");
 
 
 	}
