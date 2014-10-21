@@ -27,6 +27,8 @@ public class Process {
 	public int numWaitTimes;
 	public int remBurstTime;
 
+	public int timeWithCpu;
+
 	public Process(int pid) {
 		processID = pid;
 		turnaroundTime = 0;
@@ -39,6 +41,7 @@ public class Process {
 		totalBurstTime=0;
 		numWaitTimes = 1;
 		totalWaitTime = 0;
+		timeWithCpu = 0;
 	}
 
 	public void refresh(int et) { // Process Timings must vary each time

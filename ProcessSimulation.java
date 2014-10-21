@@ -63,14 +63,14 @@ public class ProcessSimulation {
 		}
 
 		// Shortest Job First
-		System.out.println("\nShortest Job First (No Preemption");
+/*		System.out.println("\nShortest Job First (No Preemption");
 		System.out.println("**********************************************************************");
 		ShortestJobFirst sjf = new ShortestJobFirst(processes, m);
 		sjf.execute();
 		System.out.println("----------------------------------------------------------------------");
 		sjf.statistics();
 		System.out.println("**********************************************************************");
-
+*/
 		// Round Robin
 		int t_sl = 100;
 		System.out.println("Round Robin");

@@ -13,42 +13,6 @@ class RoundRobin extends Algorithm{
 		t_slice = t_sl;
 	}
 
-	public void waitCompletion(Process temp){
-		temp.arrivalTime=elapsed_time;
-		readyQueue.add(temp);
-		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
-	}
-
-	public void burstCompletion(Process currentProcess){
-		currentProcess.totalBurstTime+=currentProcess.burstTime;
-
-		//print process status
-		System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + currentProcess.turnaroundTime + "ms, total wait time " + currentProcess.waitTime + "ms)");
-
-		//updates the current process with new times
-		currentProcess.refresh(elapsed_time);
-		
-		//Identify type of process and implement
-		if(currentProcess.pType == "CPU-bound process"){
-			if(currentProcess.remBursts==1){
-				cpu_in_queue--;
-				currentProcess.totalBurstTime+=currentProcess.burstTime;
-
-				//print process status
-				System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + currentProcess.getAvgTurnaroundTime() + "ms, avg total wait time " + currentProcess.getAvgWaitTime() + "ms)");
-
-			}
-			else{
-				currentProcess.remBursts--;
-				waitingTimeList.add(currentProcess);
-			}
-		}
-		//Interactive Process
-		else{
-			waitingTimeList.add(currentProcess);
-		}
-	}
-
 	public void incrementTime(int amount){
 		//increase elapsed time by one
 		elapsed_time += amount;
@@ -88,19 +52,65 @@ class RoundRobin extends Algorithm{
 			temp = cpuList.get(i);
 			temp.remBurstTime--;
 			temp.turnaroundTime++;
+			temp.timeWithCpu++;
 			if(temp.remBurstTime == 0){
+				// System.out.println("Removing "+temp.processID+" from cpuList");
 				temp.endTime=elapsed_time;
 				burstCompletion(temp);
 				cpuList.remove(temp);
 			}
-			else if(time slice is up) {
+			else if(temp.timeWithCpu >= t_slice) {
+				temp.timeWithCpu = 0;
 				sliceCompletion(temp);
 				cpuList.remove(temp);
 			}
 		}
+
 	}
 
-	public void execute() {
+	public void sliceCompletion(Process temp) {
+		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " preempted");
+		readyQueue.add(temp);
+	}
+
+	public void waitCompletion(Process temp){
+		temp.arrivalTime=elapsed_time;
+		readyQueue.add(temp);
+		System.out.println("[time " + elapsed_time + "ms] " + temp.pType + " ID " + temp.processID + " entered ready queue (requires " + temp.burstTime + "ms CPU time)");
+	}
+
+	public void burstCompletion(Process currentProcess){
+		currentProcess.totalBurstTime+=currentProcess.burstTime;
+
+		//print process status
+		System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " CPU burst done (turnaround time " + currentProcess.turnaroundTime + "ms, total wait time " + currentProcess.waitTime + "ms)");
+
+		//updates the current process with new times
+		currentProcess.refresh(elapsed_time);
+
+		//Identify type of process and implement
+		if(currentProcess.pType == "CPU-bound process"){
+			if(currentProcess.remBursts==1){
+				cpu_in_queue--;
+				currentProcess.remBursts--;
+
+				//print process status
+				System.out.println("[time " + elapsed_time + "ms] " + currentProcess.pType + " ID " + currentProcess.processID + " terminated (avg turnaround time " + currentProcess.getAvgTurnaroundTime() + "ms, avg total wait time " + currentProcess.getAvgWaitTime() + "ms)");
+
+			}
+			else{
+				currentProcess.remBursts--;
+				waitingTimeList.add(currentProcess);
+			}
+		}
+		//Interactive Process
+		else{
+			waitingTimeList.add(currentProcess);
+		}
+
+	}
+
+	public void execute(){
 		//adds all original processes in array to the ready queue at time 0ms
 		for(int i = 0; i < super.processes.length; ++i){
 			super.readyQueue.add(super.processes[i]);
@@ -109,10 +119,13 @@ class RoundRobin extends Algorithm{
 				super.cpu_in_queue+=1;
 			}
 		}
+
 		//while queue has CPU-bound processes run...
-		while(super.cpu_in_queue > 0) {
+		while(super.cpu_in_queue>0) {
+
 			//fills cpu's with processes
-			while(cpuList.size() < m) {
+			while(cpuList.size() < m){
+
 				//polls shortest job from the queue
 				Process xProcess = readyQueue.poll();	
 				
@@ -120,7 +133,6 @@ class RoundRobin extends Algorithm{
 					incrementTime(1);
 					continue;
 				}
-				xProcess.rrTime
 				cpuList.add(xProcess);
 			}
 			incrementTime(1);
