@@ -24,4 +24,9 @@ public class IntProcess extends Process { // 80% are Interactive
 	public int getAvgTurnaroundTime(){
 		return (int) (totalTurnaroundTime / numWaitTimes);		
 	}
+
+	@Override
+	public int getAvgWaitTime(){
+		return (int) ((totalTurnaroundTime - totalBurstTime)/numWaitTimes);
+	}
 }

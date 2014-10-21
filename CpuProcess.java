@@ -12,8 +12,11 @@ public class CpuProcess extends Process { // 20% are CPU
 
 	@Override
 	public void refresh(int et) {
-		super.arrivalTime = et;
 		totalTurnaroundTime+=turnaroundTime;
+		if(remBursts==0){
+			return;
+		}
+		super.arrivalTime = et;
 		turnaroundTime=0;
 		totalWaitTime+=waitTime;
 		waitTime=0;
@@ -24,6 +27,11 @@ public class CpuProcess extends Process { // 20% are CPU
 
 	@Override
 	public int getAvgTurnaroundTime(){
-		return (int) (totalTurnaroundTime / super.numBursts);	
+		return (int) (totalTurnaroundTime / numBursts);	
+	}
+
+	@Override
+	public int getAvgWaitTime(){
+		return (int) ((totalTurnaroundTime - totalBurstTime)/ numBursts);
 	}
 }
